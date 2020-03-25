@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -110,6 +112,11 @@ class _EasyWebViewState extends State<EasyWebView> {
         return WebView(
           key: widget?.key,
           initialUrl: _updateUrl(src),
+          gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+            Factory<OneSequenceGestureRecognizer>(
+              () => EagerGestureRecognizer(),
+            ),
+          ].toSet(),
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (val) {
             _controller = val;
