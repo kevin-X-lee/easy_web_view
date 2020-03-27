@@ -1,5 +1,6 @@
 import 'dart:html' as html;
 import 'dart:ui' as ui;
+import 'dart:js' as js;
 
 import 'package:flutter/material.dart';
 
@@ -102,6 +103,9 @@ class _EasyWebViewState extends State<EasyWebView> {
           );
         }
         _setup(src, w, h);
+        if (widget.resData != null) {
+          _addEventListener();
+        }
         return AbsorbPointer(
           child: RepaintBoundary(
             child: HtmlElementView(
@@ -124,6 +128,7 @@ class _EasyWebViewState extends State<EasyWebView> {
         _iframeElementMap[widget.key] = html.IFrameElement();
       }
       final element = _iframeElementMap[widget.key]
+        ..id = 'EasyWebView'
         ..style.border = '0'
         ..allowFullscreen = widget.webAllowFullScreen
         ..height = height.toInt().toString()
@@ -141,6 +146,23 @@ class _EasyWebViewState extends State<EasyWebView> {
         element..src = _src;
       }
       return element;
+    });
+  }
+
+  void _addEventListener() {
+    html.window.addEventListener('message', (event) {
+      print('====message===$event');
+      var element = html.document.getElementsByTagName('flt-platform-view')[0]
+          as html.HtmlElement;
+      var iFrame =
+          element.shadowRoot.getElementById('EasyWebView') as html.IFrameElement;
+      var iFrameJsObj = new js.JsObject.fromBrowserObject(iFrame);
+      var iFreameWinJsObj =
+          new js.JsObject.fromBrowserObject(iFrameJsObj['contentWindow']);
+      // iFreameWinJsObj.callMethod('init');
+      iFreameWinJsObj.callMethod(widget.resData);
+      
+      //iFrame.contentWindow.postMessage('message', '*');
     });
   }
 }
