@@ -9,6 +9,7 @@ class EasyWebView extends StatefulWidget implements EasyWebViewImpl {
   const EasyWebView({
     Key key,
     @required this.src,
+    this.resData,
     this.height,
     this.width,
     this.webAllowFullScreen = true,
@@ -28,6 +29,9 @@ class EasyWebView extends StatefulWidget implements EasyWebViewImpl {
 
   @override
   final String src;
+
+  @override
+  final String resData;
 
   @override
   final num width;
@@ -120,6 +124,11 @@ class _EasyWebViewState extends State<EasyWebView> {
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (val) {
             _controller = val;
+          },
+          onPageFinished: (url) {
+            if (null != widget.resData) {
+              _controller.evaluateJavascript(widget.resData);
+            }
           },
         );
       },
