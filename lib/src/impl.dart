@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 class EasyWebViewImpl {
   final String src;
   final String resData;
+  final String methodName;
   final num width, height;
   final bool webAllowFullScreen;
   final bool isMarkdown;
@@ -19,6 +20,7 @@ class EasyWebViewImpl {
   EasyWebViewImpl({
     @required this.src,
     this.resData,
+    this.methodName,
     this.width,
     this.height,
     this.webAllowFullScreen = true,
