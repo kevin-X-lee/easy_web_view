@@ -16,6 +16,7 @@ class EasyWebViewImpl {
   final bool convertToWidets;
   final Map<String, String> headers;
   final bool widgetsTextSelectable;
+  final bool isAllowEvent;
 
   EasyWebViewImpl({
     @required this.src,
@@ -28,6 +29,7 @@ class EasyWebViewImpl {
     this.isMarkdown = false,
     this.convertToWidets = false,
     this.widgetsTextSelectable = false,
+    this.isAllowEvent = true,
     this.headers,
   }) : assert((isHtml && isMarkdown) == false);
 

@@ -20,6 +20,7 @@ class EasyWebView extends StatefulWidget implements EasyWebViewImpl {
     this.convertToWidets = false,
     this.headers = const {},
     this.widgetsTextSelectable = false,
+    this.isAllowEvent = true,
   })  : assert((isHtml && isMarkdown) == false),
         super(key: key);
 
@@ -58,6 +59,9 @@ class EasyWebView extends StatefulWidget implements EasyWebViewImpl {
 
   @override
   final bool widgetsTextSelectable;
+
+  @override
+  final bool isAllowEvent;
 }
 
 class _EasyWebViewState extends State<EasyWebView> {
@@ -125,6 +129,12 @@ class _EasyWebViewState extends State<EasyWebView> {
   static final _iframeElementMap = Map<Key, html.IFrameElement>();
 
   void _setup(String src, num width, num height) {
+    var pointerEvents;
+    if (widget.isAllowEvent) {
+      pointerEvents = 'auto';
+    } else {
+      pointerEvents = 'none';
+    }
     final src = widget.src;
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory('iframe-$src', (int viewId) {
@@ -134,6 +144,7 @@ class _EasyWebViewState extends State<EasyWebView> {
       final element = _iframeElementMap[widget.key]
         ..id = 'EasyWebView'
         ..style.border = '0'
+        ..style.pointerEvents = pointerEvents
         ..allowFullscreen = widget.webAllowFullScreen
         ..height = height.toInt().toString()
         ..width = width.toInt().toString();
@@ -158,14 +169,14 @@ class _EasyWebViewState extends State<EasyWebView> {
       print('====message===$event');
       var element = html.document.getElementsByTagName('flt-platform-view')[0]
           as html.HtmlElement;
-      var iFrame =
-          element.shadowRoot.getElementById('EasyWebView') as html.IFrameElement;
+      var iFrame = element.shadowRoot.getElementById('EasyWebView')
+          as html.IFrameElement;
       var iFrameJsObj = new js.JsObject.fromBrowserObject(iFrame);
       var iFreameWinJsObj =
           new js.JsObject.fromBrowserObject(iFrameJsObj['contentWindow']);
       // iFreameWinJsObj.callMethod('init');
       // iFreameWinJsObj.callMethod(widget.resData);
-      iFreameWinJsObj.callMethod(widget.methodName,[widget.resData]);
+      iFreameWinJsObj.callMethod(widget.methodName, [widget.resData]);
       //iFrame.contentWindow.postMessage('message', '*');
     });
   }
