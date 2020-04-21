@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^0.1.2
   # webview_flutter: ^0.3.15+1
+  bot_toast: # Star: 303
   webview_flutter:
     git:
       url: https://github.com/kevin-X-lee/plugins.git
