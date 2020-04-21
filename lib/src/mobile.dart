@@ -146,7 +146,16 @@ class _EasyWebViewState extends State<EasyWebView> {
               builder: (_) => WillPopScope(
                 onWillPop: () async => false,
                 child: CupertinoAlertDialog(
+                  title: Text('INFO'),
                   content: Text(message),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
                 ),
               ),
             );
