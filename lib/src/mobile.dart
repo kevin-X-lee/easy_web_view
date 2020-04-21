@@ -182,11 +182,10 @@ class _EasyWebViewState extends State<EasyWebView> {
                       },
                       child: Text(
                         'OK',
-                        // style: TextStyle(
-                        //   fontSize: 17.0,
-                        //   fontFamily: 'AIAEverestRegular',
-                        //   color: Color(0xFF007AFF),
-                        // ),
+                        style: TextStyle(
+                          fontSize: 17.0,
+                          color: Color(0xFF007AFF),
+                        ),
                       ),
                       // color: Colors.white,
                     ),
