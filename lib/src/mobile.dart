@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -137,6 +138,18 @@ class _EasyWebViewState extends State<EasyWebView> {
             if (null != widget.resData) {
               _controller.evaluateJavascript(widget.resData);
             }
+          },
+          onJSAlert: (String url, String message) async {
+            return await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => WillPopScope(
+                onWillPop: () async => false,
+                child: CupertinoAlertDialog(
+                  content: Text(message),
+                ),
+              ),
+            );
           },
         );
       },
