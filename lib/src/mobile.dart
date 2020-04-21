@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -140,24 +141,58 @@ class _EasyWebViewState extends State<EasyWebView> {
             }
           },
           onJSAlert: (String url, String message) async {
-            return await showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => WillPopScope(
-                onWillPop: () async => false,
-                child: CupertinoAlertDialog(
-                  title: Text('INFO'),
+            // return await showDialog(
+            //   context: context,
+            //   barrierDismissible: false,
+            //   builder: (_) => WillPopScope(
+            //     onWillPop: () async => false,
+            //     child: CupertinoAlertDialog(
+            //       title: Text('INFO'),
+            //       content: Text(message),
+            //       actions: <Widget>[
+            //         CupertinoDialogAction(
+            //           child: Text('OK'),
+            //           onPressed: () {
+            //             Navigator.of(context).pop('OK');
+            //           },
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // );
+            BotToast.showCustomLoading(
+              clickClose: false,
+              allowClick: false,
+              ignoreContentClick: false,
+              animationDuration: Duration(milliseconds: 200),
+              animationReverseDuration: Duration(milliseconds: 200),
+              backgroundColor: Color(0x33000000),
+              align: Alignment.center,
+              toastBuilder: (cancelFunc) {
+                return CupertinoAlertDialog(
+                  title: Container(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: Text('INFO'),
+                  ),
                   content: Text(message),
                   actions: <Widget>[
-                    CupertinoDialogAction(
-                      child: Text('OK'),
+                    FlatButton(
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        BotToast.closeAllLoading();
                       },
+                      child: Text(
+                        'OK',
+                        // style: TextStyle(
+                        //   fontSize: 17.0,
+                        //   fontFamily: 'AIAEverestRegular',
+                        //   color: Color(0xFF007AFF),
+                        // ),
+                      ),
+                      // color: Colors.white,
                     ),
                   ],
-                ),
-              ),
+                );
+              },
             );
           },
         );
