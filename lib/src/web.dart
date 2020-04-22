@@ -135,6 +135,9 @@ class _EasyWebViewState extends State<EasyWebView> {
     } else {
       pointerEvents = 'none';
     }
+    if (_iframeElementMap[widget.key]!= null) {
+      _iframeElementMap[widget.key].style.pointerEvents = pointerEvents;
+    }
     final src = widget.src;
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory('iframe-$src', (int viewId) {
