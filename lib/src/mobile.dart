@@ -140,62 +140,197 @@ class _EasyWebViewState extends State<EasyWebView> {
               _controller.evaluateJavascript(widget.resData);
             }
           },
+          // onJSAlert: (String url, String message) async {
+          //   return BotToast.showCustomLoading(
+          //     clickClose: false,
+          //     allowClick: false,
+          //     ignoreContentClick: false,
+          //     animationDuration: Duration(milliseconds: 200),
+          //     animationReverseDuration: Duration(milliseconds: 200),
+          //     backgroundColor: Color(0x33000000),
+          //     align: Alignment.center,
+          //     toastBuilder: (cancelFunc) {
+          //       return CupertinoAlertDialog(
+          //         title: Container(
+          //           padding: EdgeInsets.only(bottom: 8),
+          //           child: Text('INFO'),
+          //         ),
+          //         content: Text(message),
+          //         actions: <Widget>[
+          //           FlatButton(
+          //             onPressed: () {
+          //               BotToast.closeAllLoading();
+          //               return true;
+          //             },
+          //             child: Text(
+          //               'OK',
+          //               style: TextStyle(
+          //                 fontSize: 17.0,
+          //                 color: Color(0xFF007AFF),
+          //               ),
+          //             ),
+          //             // color: Colors.white,
+          //           ),
+          //         ],
+          //       );
+          //     },
+          //   );
+          // },
           onJSAlert: (String url, String message) async {
-            // return await showDialog(
-            //   context: context,
-            //   barrierDismissible: false,
-            //   builder: (_) => WillPopScope(
-            //     onWillPop: () async => false,
-            //     child: CupertinoAlertDialog(
-            //       title: Text('INFO'),
-            //       content: Text(message),
-            //       actions: <Widget>[
-            //         CupertinoDialogAction(
-            //           child: Text('OK'),
-            //           onPressed: () {
-            //             Navigator.of(context).pop('OK');
-            //           },
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // );
-            BotToast.showCustomLoading(
-              clickClose: false,
-              allowClick: false,
-              ignoreContentClick: false,
-              animationDuration: Duration(milliseconds: 200),
-              animationReverseDuration: Duration(milliseconds: 200),
-              backgroundColor: Color(0x33000000),
-              align: Alignment.center,
-              toastBuilder: (cancelFunc) {
-                return CupertinoAlertDialog(
-                  title: Container(
-                    padding: EdgeInsets.only(bottom: 8),
-                    child: Text('INFO'),
-                  ),
-                  content: Text(message),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () {
-                        BotToast.closeAllLoading();
-                      },
-                      child: Text(
-                        'OK',
-                        style: TextStyle(
-                          fontSize: 17.0,
-                          color: Color(0xFF007AFF),
-                        ),
-                      ),
-                      // color: Colors.white,
-                    ),
-                  ],
-                );
-              },
+            return await showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => WillPopScope(
+                    onWillPop: () async => false,
+                    child: MyCupertinoAlertDialog(message: message)));
+          },
+          onJSConfirm: (String url, String message) async {
+            return await showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => WillPopScope(
+                  onWillPop: () async => false,
+                  child: CupertinoConfirmDialog(message: message)),
             );
+          },
+          onJSPrompt: (String url, String message, String defaultText) async {
+            return await showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => WillPopScope(
+                    onWillPop: () async => false,
+                    child: CupertinoPromptDialog(
+                        message: message, defaultText: defaultText)));
           },
         );
       },
+    );
+  }
+}
+
+/// An example for cupertino style alert dialog.
+class MyCupertinoAlertDialog extends StatelessWidget {
+  /// Dialog message.
+  final String message;
+
+  /// Constructs an instance with a message.
+  MyCupertinoAlertDialog({this.message = ''});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      content: Text(message),
+      actions: <Widget>[
+        CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+      ],
+    );
+  }
+}
+
+/// An example for cupertino style confirm dialog.
+class CupertinoConfirmDialog extends StatelessWidget {
+  /// Dialog message.
+  final String message;
+
+  /// Constructs an instance with a message.
+  CupertinoConfirmDialog({this.message = ''});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      content: Text(message),
+      actions: <Widget>[
+        CupertinoDialogAction(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            }),
+        CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            }),
+      ],
+    );
+  }
+}
+
+/// An example for cupertino style prompt dialog.
+class CupertinoPromptDialog extends StatefulWidget {
+  /// Dialog message.
+  final String message;
+
+  /// Dialog default text.
+  final String defaultText;
+
+  /// Constructs an instance with a message and default text.
+  CupertinoPromptDialog({Key key, this.message, this.defaultText})
+      : super(key: key);
+
+  @override
+  _PromptDialogState createState() => _PromptDialogState();
+}
+
+class _PromptDialogState extends State<CupertinoPromptDialog> {
+  TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+    _controller.text = widget.defaultText;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(widget.message),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
+              child: CupertinoTextField(
+                controller: _controller,
+                cursorColor: CupertinoColors.inactiveGray,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+                maxLines: 1,
+                decoration: BoxDecoration(
+                  color: CupertinoColors.white,
+                  border: Border.all(
+                    width: 1.2,
+                    color: CupertinoColors.inactiveGray,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            )
+          ]),
+      actions: <Widget>[
+        CupertinoDialogAction(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop('');
+            }),
+        CupertinoDialogAction(
+            child: const Text('OK'),
+            onPressed: () {
+              Navigator.of(context).pop(_controller.text);
+            }),
+      ],
     );
   }
 }
