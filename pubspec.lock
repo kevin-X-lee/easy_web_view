@@ -284,11 +284,11 @@ packages:
     dependency: "direct main"
     description:
       path: "packages/webview_flutter"
-      ref: dev
-      resolved-ref: "60909f098e3264c86c6a219342853987fe111f59"
+      ref: dev2
+      resolved-ref: a4101535e5a8495e3217967dcef847e45c162797
       url: "https://github.com/kevin-X-lee/plugins.git"
     source: git
-    version: "0.3.19+9"
+    version: "0.3.21"
   xml:
     dependency: transitive
     description:
@@ -297,5 +297,5 @@ packages:
     source: hosted
     version: "3.6.1"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"
