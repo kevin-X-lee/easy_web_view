@@ -1,4 +1,5 @@
 import 'dart:html' as html;
+import 'dart:html';
 import 'dart:ui' as ui;
 import 'dart:js' as js;
 
@@ -82,6 +83,36 @@ class _EasyWebViewState extends State<EasyWebView> {
     super.didUpdateWidget(oldWidget);
   }
 
+  Function functionEventListener;
+
+  @override
+  void initState() {
+    super.initState();
+    functionEventListener = (Event event) {
+      print('====message===$event');
+      var element = html.document.getElementsByTagName('flt-platform-view')[0]
+          as html.HtmlElement;
+      var iFrame = element.shadowRoot.getElementById('EasyWebView')
+          as html.IFrameElement;
+      var iFrameJsObj = new js.JsObject.fromBrowserObject(iFrame);
+      var iFreameWinJsObj =
+          new js.JsObject.fromBrowserObject(iFrameJsObj['contentWindow']);
+      // iFreameWinJsObj.callMethod('init');
+      // iFreameWinJsObj.callMethod(widget.resData);
+      iFreameWinJsObj.callMethod(widget.methodName, [widget.resData]);
+      //iFrame.contentWindow.postMessage('message', '*');
+    };
+    if (widget.resData != null) {
+      html.window.addEventListener('message', functionEventListener);
+    }
+  }
+
+  @override
+  void dispose() {
+    html.window.removeEventListener('message', functionEventListener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return OptionalSizedChild(
@@ -111,9 +142,9 @@ class _EasyWebViewState extends State<EasyWebView> {
           );
         }
         _setup(src, w, h);
-        if (widget.resData != null) {
-          _addEventListener();
-        }
+        // if (widget.resData != null) {
+        //   _addEventListener();
+        // }
         return AbsorbPointer(
           child: RepaintBoundary(
             child: HtmlElementView(
@@ -135,7 +166,7 @@ class _EasyWebViewState extends State<EasyWebView> {
     } else {
       pointerEvents = 'none';
     }
-    if (_iframeElementMap[widget.key]!= null) {
+    if (_iframeElementMap[widget.key] != null) {
       _iframeElementMap[widget.key].style.pointerEvents = pointerEvents;
     }
     final src = widget.src;
@@ -166,21 +197,20 @@ class _EasyWebViewState extends State<EasyWebView> {
       return element;
     });
   }
-
-  void _addEventListener() {
-    html.window.addEventListener('message', (event) {
-      print('====message===$event');
-      var element = html.document.getElementsByTagName('flt-platform-view')[0]
-          as html.HtmlElement;
-      var iFrame = element.shadowRoot.getElementById('EasyWebView')
-          as html.IFrameElement;
-      var iFrameJsObj = new js.JsObject.fromBrowserObject(iFrame);
-      var iFreameWinJsObj =
-          new js.JsObject.fromBrowserObject(iFrameJsObj['contentWindow']);
-      // iFreameWinJsObj.callMethod('init');
-      // iFreameWinJsObj.callMethod(widget.resData);
-      iFreameWinJsObj.callMethod(widget.methodName, [widget.resData]);
-      //iFrame.contentWindow.postMessage('message', '*');
-    });
-  }
+  // void _addEventListener() {
+  //   html.window.addEventListener('message', (event) {
+  //     print('====message===$event');
+  //     var element = html.document.getElementsByTagName('flt-platform-view')[0]
+  //         as html.HtmlElement;
+  //     var iFrame = element.shadowRoot.getElementById('EasyWebView')
+  //         as html.IFrameElement;
+  //     var iFrameJsObj = new js.JsObject.fromBrowserObject(iFrame);
+  //     var iFreameWinJsObj =
+  //         new js.JsObject.fromBrowserObject(iFrameJsObj['contentWindow']);
+  //     // iFreameWinJsObj.callMethod('init');
+  //     // iFreameWinJsObj.callMethod(widget.resData);
+  //     iFreameWinJsObj.callMethod(widget.methodName, [widget.resData]);
+  //     //iFrame.contentWindow.postMessage('message', '*');
+  //   });
+  // }
 }
