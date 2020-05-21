@@ -23,6 +23,9 @@ dependencies:
   url_launcher: ^5.4.2
   http: ^0.12.0+4
   native_webview:
+    git:
+      url: https://github.com/kevin-X-lee/native_webview.git
+      ref: master
 
 dev_dependencies:
   flutter_test:

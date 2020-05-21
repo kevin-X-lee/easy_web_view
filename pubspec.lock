@@ -145,10 +145,12 @@ packages:
   native_webview:
     dependency: "direct main"
     description:
-      name: native_webview
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.19.0"
+      path: "."
+      ref: master
+      resolved-ref: "43232d2787290efa7120def5c9444ca7f1d3072a"
+      url: "https://github.com/kevin-X-lee/native_webview.git"
+    source: git
+    version: "0.20.0"
   path:
     dependency: transitive
     description:
