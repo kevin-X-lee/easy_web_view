@@ -147,7 +147,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "43232d2787290efa7120def5c9444ca7f1d3072a"
+      resolved-ref: d505c623bac7f58739ff189c6798aebb70ed349f
       url: "https://github.com/kevin-X-lee/native_webview.git"
     source: git
     version: "0.20.0"

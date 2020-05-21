@@ -127,7 +127,6 @@ class _EasyWebViewState extends State<EasyWebView> {
         return WebView(
           key: widget?.key,
           initialUrl: _updateUrl(src),
-          gestureNavigationEnabled: true,
           onWebViewCreated: (val) {
             _controller = val;
           },
