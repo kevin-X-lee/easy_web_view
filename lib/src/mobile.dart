@@ -127,6 +127,14 @@ class _EasyWebViewState extends State<EasyWebView> {
         return WebView(
           key: widget?.key,
           initialUrl: _updateUrl(src),
+          onWebViewCreated: (val) {
+            _controller = val;
+          },
+          onPageFinished: (controller, url) {
+            if (null != widget.resData) {
+              _controller.evaluateJavascript(widget.resData);
+            }
+          },
         );
         // return WebView(
         //   key: widget?.key,
