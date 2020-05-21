@@ -1,11 +1,12 @@
-import 'package:bot_toast/bot_toast.dart';
+// import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 
 import 'impl.dart';
+import 'package:native_webview/native_webview.dart';
 
 class EasyWebView extends StatefulWidget implements EasyWebViewImpl {
   const EasyWebView({
@@ -126,83 +127,51 @@ class _EasyWebViewState extends State<EasyWebView> {
         return WebView(
           key: widget?.key,
           initialUrl: _updateUrl(src),
-          gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-            Factory<OneSequenceGestureRecognizer>(
-              () => EagerGestureRecognizer(),
-            ),
-          ].toSet(),
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (val) {
-            _controller = val;
-          },
-          onPageFinished: (url) {
-            if (null != widget.resData) {
-              _controller.evaluateJavascript(widget.resData);
-            }
-          },
-          // onJSAlert: (String url, String message) async {
-          //   return BotToast.showCustomLoading(
-          //     clickClose: false,
-          //     allowClick: false,
-          //     ignoreContentClick: false,
-          //     animationDuration: Duration(milliseconds: 200),
-          //     animationReverseDuration: Duration(milliseconds: 200),
-          //     backgroundColor: Color(0x33000000),
-          //     align: Alignment.center,
-          //     toastBuilder: (cancelFunc) {
-          //       return CupertinoAlertDialog(
-          //         title: Container(
-          //           padding: EdgeInsets.only(bottom: 8),
-          //           child: Text('INFO'),
-          //         ),
-          //         content: Text(message),
-          //         actions: <Widget>[
-          //           FlatButton(
-          //             onPressed: () {
-          //               BotToast.closeAllLoading();
-          //               return true;
-          //             },
-          //             child: Text(
-          //               'OK',
-          //               style: TextStyle(
-          //                 fontSize: 17.0,
-          //                 color: Color(0xFF007AFF),
-          //               ),
-          //             ),
-          //             // color: Colors.white,
-          //           ),
-          //         ],
-          //       );
-          //     },
-          //   );
-          // },
-          onJSAlert: (String url, String message) async {
-            return await showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) => WillPopScope(
-                    onWillPop: () async => false,
-                    child: MyCupertinoAlertDialog(message: message)));
-          },
-          onJSConfirm: (String url, String message) async {
-            return await showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => WillPopScope(
-                  onWillPop: () async => false,
-                  child: CupertinoConfirmDialog(message: message)),
-            );
-          },
-          onJSPrompt: (String url, String message, String defaultText) async {
-            return await showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) => WillPopScope(
-                    onWillPop: () async => false,
-                    child: CupertinoPromptDialog(
-                        message: message, defaultText: defaultText)));
-          },
         );
+        // return WebView(
+        //   key: widget?.key,
+        //   initialUrl: _updateUrl(src),
+        //   gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
+        //     Factory<OneSequenceGestureRecognizer>(
+        //       () => EagerGestureRecognizer(),
+        //     ),
+        //   ].toSet(),
+        //   javascriptMode: JavascriptMode.unrestricted,
+        //   onWebViewCreated: (val) {
+        //     _controller = val;
+        //   },
+        //   onPageFinished: (url) {
+        //     if (null != widget.resData) {
+        //       _controller.evaluateJavascript(widget.resData);
+        //     }
+        //   },
+        //   onJSAlert: (String url, String message) async {
+        //     return await showDialog(
+        //         context: context,
+        //         barrierDismissible: false,
+        //         builder: (_) => WillPopScope(
+        //             onWillPop: () async => false,
+        //             child: MyCupertinoAlertDialog(message: message)));
+        //   },
+        //   onJSConfirm: (String url, String message) async {
+        //     return await showDialog(
+        //       context: context,
+        //       barrierDismissible: false,
+        //       builder: (_) => WillPopScope(
+        //           onWillPop: () async => false,
+        //           child: CupertinoConfirmDialog(message: message)),
+        //     );
+        //   },
+        //   onJSPrompt: (String url, String message, String defaultText) async {
+        //     return await showDialog(
+        //         context: context,
+        //         barrierDismissible: false,
+        //         builder: (_) => WillPopScope(
+        //             onWillPop: () async => false,
+        //             child: CupertinoPromptDialog(
+        //                 message: message, defaultText: defaultText)));
+        //   },
+        // );
       },
     );
   }
