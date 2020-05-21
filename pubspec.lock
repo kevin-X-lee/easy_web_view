@@ -142,15 +142,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.8"
-  native_webview:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: master
-      resolved-ref: d505c623bac7f58739ff189c6798aebb70ed349f
-      url: "https://github.com/kevin-X-lee/native_webview.git"
-    source: git
-    version: "0.20.0"
   path:
     dependency: transitive
     description:
@@ -261,6 +252,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.8"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      path: "packages/webview_flutter"
+      ref: dev2
+      resolved-ref: f6f122aa741f12e7e6a4a4cbd5366d7efd7a7b88
+      url: "https://github.com/kevin-X-lee/plugins.git"
+    source: git
+    version: "0.3.21"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
+  dart: ">=2.7.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.5 <2.0.0"
