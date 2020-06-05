@@ -271,7 +271,7 @@ packages:
     description:
       path: "packages/webview_flutter"
       ref: dev2
-      resolved-ref: "30db234f0230580f0b1ce69349872ef801c43da2"
+      resolved-ref: ef0b7a64b119761d68fae38fc7be33a164f52504
       url: "https://github.com/kevin-X-lee/plugins.git"
     source: git
     version: "0.3.21"
