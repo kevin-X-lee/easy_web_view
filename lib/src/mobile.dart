@@ -153,32 +153,32 @@ class _EasyWebViewState extends State<EasyWebView> {
               _controller.evaluateJavascript(widget.resData);
             }
           },
-          onJSAlert: (String url, String message) async {
-            return await showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) => WillPopScope(
-                    onWillPop: () async => false,
-                    child: MyCupertinoAlertDialog(message: message)));
-          },
-          onJSConfirm: (String url, String message) async {
-            return await showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => WillPopScope(
-                  onWillPop: () async => false,
-                  child: CupertinoConfirmDialog(message: message)),
-            );
-          },
-          onJSPrompt: (String url, String message, String defaultText) async {
-            return await showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (_) => WillPopScope(
-                    onWillPop: () async => false,
-                    child: CupertinoPromptDialog(
-                        message: message, defaultText: defaultText)));
-          },
+          // onJSAlert: (String url, String message) async {
+          //   return await showDialog(
+          //       context: context,
+          //       barrierDismissible: false,
+          //       builder: (_) => WillPopScope(
+          //           onWillPop: () async => false,
+          //           child: MyCupertinoAlertDialog(message: message)));
+          // },
+          // onJSConfirm: (String url, String message) async {
+          //   return await showDialog(
+          //     context: context,
+          //     barrierDismissible: false,
+          //     builder: (_) => WillPopScope(
+          //         onWillPop: () async => false,
+          //         child: CupertinoConfirmDialog(message: message)),
+          //   );
+          // },
+          // onJSPrompt: (String url, String message, String defaultText) async {
+          //   return await showDialog(
+          //       context: context,
+          //       barrierDismissible: false,
+          //       builder: (_) => WillPopScope(
+          //           onWillPop: () async => false,
+          //           child: CupertinoPromptDialog(
+          //               message: message, defaultText: defaultText)));
+          // },
         );
       },
     );
