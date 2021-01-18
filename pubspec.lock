@@ -283,12 +283,10 @@ packages:
   webview_flutter:
     dependency: "direct main"
     description:
-      path: "packages/webview_flutter"
-      ref: dev2
-      resolved-ref: "486cdcf52b897fb9200d1835b412d8be392577a4"
-      url: "https://github.com/kevin-X-lee/plugins.git"
-    source: git
-    version: "0.3.21"
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  flutter: ">=1.22.0 <2.0.0"
